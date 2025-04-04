@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Banking System</title>
+    <meta charset="UTF-8">
+    <!-- connecting to style.css w -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!--
+      A simple top bar,
+      with random inline style
+    -->
+    <div class="header-bar">
+        <h2>Beginner Bank System</h2>
+        <div class="header-links">
+            <a href="#/login">Login</a>
+            <a href="#/register">Dont have an account? Create one!</a>
+            <a href="#/forgot">Forgot Password</a>
+        </div>
+    </div>
+
+    <!-- This is the area that shows messages of success or error -->
+    <div id="message">
+        <!-- done by JavaScript -->
+    </div>
+
+    <!-- logging in -->
+    <div id="page-login" class="page hidden">
+        <h3>Login</h3>
+        <label>Username:</label><br>
+        <input type="text" id="loginUsername" placeholder="Username"><br><br>
+
+        <label>Password:</label><br>
+        <input type="password" id="loginPassword" placeholder="Pasword"><br><br>
+
+        <button onclick="loginUser()">Login Now</button>
+        <p>
+            <a href="#/forgot">Forgot password??</a>
+        </p>
+    </div>
+
+    <!-- 2 factor authentication -->
+    <div id="page-2fa" class="page hidden">
+        <h3>2FA Security Check</h3>
+        <p id="2faQuestion" class="twofa-question">(question text...)</p>
+        <input type="text" id="2faAnswer" placeholder="answer the question"><br><br>
+        <button onclick="verify2FA()">Submit 2FA</button>
+
+        <p class="twofa-tries">You have 3 tries</p>
+    </div>
+
+    <!-- Signing up  -->
+    <div id="page-register" class="page hidden">
+        <h3>Create Account</h3>
+
+        <label>Username</label><br>
+        <input type="text" id="regUsername" placeholder="Remember do not make it your name!"><br><br>
+
+        <label>Password</label><br>
+        <input type="password" id="regPassword" placeholder="Minimum 6 characters!"><br><br>
+
+        <label>First Name</label><br>
+        <input type="text" id="regFirstName"><br><br>
+
+        <label>Last Name</label><br>
+        <input type="text" id="regLastName"><br><br>
+
+        <label>Date of Birth</label><br>
+        <input type="date" id="regDOB"><br><br>
+
+        <label>2FA Question</label><br>
+        <input type="text" id="regQuestion" placeholder="Choose a Question very personal to you!"><br><br>
+
+        <label>2FA Answer</label><br>
+        <input type="text" id="regAnswer" placeholder="Make sure you remember this!"><br><br>
+
+        <button onclick="registerUser()">Sign Up Now</button>
+        <p class="auto-generate-note">Sort code & acct# auto generated!</p>
+    </div>
+
+    <!-- Forgot password -->
+    <div id="page-forgot" class="page hidden">
+        <h3>Forgot Password??</h3>
+        <label>Username:</label><br>
+        <input type="text" id="forgotUsername" placeholder="What is your username?"><br><br>
+
+        <span id="questionLabel" class="forgot-q" style="font-weight:bold;"></span><br><br>
+
+        <label>Answer:</label><br>
+        <input type="text" id="forgotAnswer" placeholder="2 Factor Authentication Questin"><br><br>
+
+        <label>New Password:</label><br>
+        <input type="password" id="newPassword" placeholder="Type your new password here"><br><br>
+
+        <button onclick="processForgotPassword()">Reset Password</button>
+    </div>
+
+    <!-- The home page -->
+    <div id="page-home" class="page hidden">
+        <h3>Welcome, <span id="displayName"></span>!</h3>
+
+        <p><b>Sort Code:</b> <span id="displaySortCode"></span></p>
+
+        <p><b>Account #:</b> <span id="displayAccountNumber"></span></p>
+
+        <p><b>Balance (£):</b> <span id="displayBalance"></span></p>
+
+        <hr class="divider">
+
+        <button onclick="goTo('#/transactions')">Transactions</button>
+
+        <button onclick="goTo('#/transfer')">Transfer</button>
+
+        <button onclick="goTo('#/withdraw')">Withdraw</button>
+
+        <button onclick="goTo('#/deposit')">Deposit</button>
+
+        <button onclick="goTo('#/settings')">Settings</button>
+
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <!-- Transaction history -->
+    <div id="page-transactions" class="page hidden">
+        <h3>Transaction History</h3>
+        <div id="transactionList" class="tx-list"></div>
+        <button onclick="goTo('#/home')">Back</button>
+    </div>
+
+    <!-- Transferring funds -->
+    <div id="page-transfer" class="page hidden">
+
+        <h3>Transfer to Another Account</h3>
+        <label>Amount (£)</label><br>
+        <input type="text" id="transferAmount" placeholder="e.g. 100.00"
+               oninput="this.value = this.value.replace(/[^0-9.]/g, '')"><br><br>
+
+        <label>Note</label><br>
+        <input type="text" id="transferNote" placeholder="Like transferring reason"><br><br>
+
+        <label>Recipient Sort Code</label><br>
+        <input type="text" id="transferTargetSortCode"
+               maxlength="6"
+               oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+               placeholder="Can only be 6 digits"><br><br>
+
+        <label>Recipient Account #</label><br>
+        <input type="text" id="transferTargetAccountNumber"
+               maxlength="8"
+               oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+               placeholder="Can only be 8 digits"><br><br>
+
+        <button onclick="makeTransfer()">Send Funds</button>
+        <hr class="divider">
+        <button onclick="goTo('#/home')">Cancel</button>
+    </div>
+
+    <!-- withdrawing money -->
+    <div id="page-withdraw" class="page hidden">
+        <h3>Withdraw</h3>
+        <p class="withdraw-note">(Take money out of your balance)</p>
+
+        <label>Withdraw Amount (£)</label><br>
+        <input type="text" id="withdrawAmount"
+               oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
+               placeholder="like 50.00"><br><br>
+
+        <button onclick="makeWithdraw()">Withdraw Now</button>
+        <hr class="divider">
+        <button onclick="goTo('#/home')">Back</button>
+    </div>
+
+    <!-- Depositing money -->
+    <div id="page-deposit" class="page hidden">
+        <h3>Deposit</h3>
+        <p class="deposit-note">(Put money into your account)</p>
+
+        <label>Deposit Amount (£)</label><br>
+        <input type="text" id="depositAmount"
+               oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
+               placeholder="ex: 75.00"><br><br>
+
+        <button onclick="makeDeposit()">Deposit Now</button>
+        <hr class="divider">
+        <button onclick="goTo('#/home')">Back</button>
+    </div>
+
+    <!-- Settings page -->
+    <div id="page-settings" class="page hidden">
+        <h3>Settings & Personal Info</h3>
+        <p><b>Name:</b> <span id="infoName"></span></p>
+        <p><b>DOB:</b> <span id="infoDOB"></span></p>
+        <p><b>Username:</b> <span id="infoUsername"></span></p>
+
+        <hr class="divider">
+        <h4>Change Password</h4>
+        <label>New Password</label><br>
+        <input type="password" id="settingsPassword" placeholder="min 6 chars"><br><br>
+        <button onclick="changePassword()">Update Password</button>
+
+        <hr class="divider">
+        <button onclick="goTo('#/home')">Back</button>
+    </div>
+
+    <!-- Connecting the JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

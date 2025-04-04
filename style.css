@@ -1,0 +1,149 @@
+﻿/* 
+   Basic "reset" 
+   
+*/
+body {
+    margin: 0;
+    padding: 0;
+    background: #fafafa;
+    font-family: sans-serif;
+}
+
+/* 
+   The top nav area 
+   I just named it .header-bar 
+*/
+.header-bar {
+    background-color: #333;
+    color: #fff;
+    padding: 18px; 
+}
+
+    .header-bar h2 {
+        margin: 0;
+        text-align: center;
+    }
+
+.header-links {
+    text-align: center;
+    margin-top: 5px;
+}
+
+    .header-links a {
+        color: #fff;
+        margin: 0 8px;
+        text-decoration: none;
+    }
+
+/* this shows all the messages which can either be errors or telling the user of success
+   
+*/
+#message {
+    text-align: center;
+    margin: 14px auto;
+    min-height: 20px; /* it will be visible if the box is empty */
+}
+
+/* 
+   Our "page" sections 
+   
+*/
+.page {
+    display: block; 
+    padding: 12px; 
+}
+
+/* If it has .hidden, hide it */
+.hidden {
+    display: none !important;
+}
+
+/* 
+   All "pages" (more so forms) that can be accessed
+*/
+#page-login,
+#page-forgot,
+#page-register,
+#page-home,
+#page-2fa,
+#page-transactions,
+#page-transfer,
+#page-withdraw,
+#page-deposit,
+#page-settings {
+    margin: 15px; 
+    background: #fff; /* basic white background */
+    border: 1px solid #ccc;
+    padding: 15px;
+}
+
+   
+    #page-login h3,
+    #page-forgot h3 {
+        margin-bottom: 8px;
+    }
+
+/*"2 factor authentication question 
+*/
+.twofa-question {
+    font-weight: bold;
+    color: #555;
+}
+
+/* 
+   Simple transaction-list styling 
+   
+*/
+.tx-list {
+    margin: 10px 0;
+}
+
+/* 
+   "divider" class 
+   
+*/
+.divider {
+    margin: 10px 0;
+}
+
+/* 
+   Some deposit/withdraw notes 
+   
+*/
+.withdraw-note,
+.deposit-note {
+    font-size: 14px;
+    color: #555;
+}
+
+/* The auto generate text in register 
+   Just a little style 
+*/
+.auto-generate-note {
+    color: #777;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* forgot-q 
+   
+*/
+.forgot-q {
+    color: blue;
+}
+
+/* 
+   Buttons 
+
+*/
+button {
+    cursor: pointer;
+    margin: 4px 0;
+    padding: 6px 12px;
+    border: 1px solid #666;
+    background: #eee;
+}
+
+    button:hover {
+        background: #ddd;
+    }
